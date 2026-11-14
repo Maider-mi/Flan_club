@@ -73,8 +73,14 @@ if (emplacementCarte && typeof L !== "undefined") {
     maxZoom: 19
   }).addTo(carte);
 
-  L.marker([43.4929, -1.4748]).addTo(carte).bindPopup("🍮 Premier flan à Bayonne !");
-
+flans.forEach(function(flan) {
+  if (typeof flan.latitude === "number" &&
+      typeof flan.longitude === "number") {
+    L.marker([flan.latitude, flan.longitude])
+      .addTo(carte)
+      .bindPopup("🍮 " + flan.nom + " - " + flan.ville);
+  }
+});
   const boutonGeo = document.getElementById("btn-geolocalisation");
 
   if (boutonGeo) {

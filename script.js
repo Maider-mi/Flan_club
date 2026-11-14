@@ -1,6 +1,6 @@
 // 0. LA FEUILLE GOOGLE : colle ici le lien de ta feuille « Site » publiée en CSV (voir les étapes à venir).
 // Tant que ce lien est vide, le site affiche seulement les flans écrits dans la liste ci-dessous.
-const LIEN_FEUILLE = "";
+const LIEN_FEUILLE = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTr_xsdTIQTnx7EzcPq9Iq3Ex4vFHavTblJDUYTo_7d0r4UKAt5lYxlj-KGH3NtDrvp4afgZKRNnQc4/pub?gid=780288415&single=true&output=csv";
 
 // Les commentaires : le lien CSV de l'onglet « Commentaires », et le lien du formulaire « Laisser un commentaire ».
 // Tant qu'ils sont vides, seuls les commentaires écrits dans la liste ci-dessous s'affichent.
@@ -8,7 +8,7 @@ const LIEN_COMMENTAIRES = "";
 const LIEN_FORM_COMMENTAIRE = "";
 
 // 1. LES DONNEES : les flans recensés
-// - "criteres" = les 4 notes [croûte, crème, caramélisation, qualité/prix]. La note finale est leur moyenne.
+// - "criteres" = les 4 notes [pâte, crème, goût, qualité/prix]. La note finale est leur moyenne.
 // - "exemple: true" = flan inventé (une étiquette « Exemple fictif » s'affiche).
 // - latitude / longitude = la position exacte. Sans elles, le flan est placé au centre de sa ville.
 const flansLocaux = [
@@ -212,7 +212,7 @@ function ouvrirDetail(id) {
   const flan = flans.find(function(f) { return f.id === id; });
   if (!flan) return;
   const note = calculerNote(flan);
-  const noms = ["Croûte", "Crème", "Caramélisation", "Rapport qualité/prix"];
+  const noms = ["Pâte", "Crème", "Goût", "Rapport qualité/prix"];
   const barres = Array.isArray(flan.criteres)
     ? noms.map(function(nom, i) {
         return '<div class="critere"><span>' + nom + '</span><div class="barre-note"><i style="width:' + (flan.criteres[i] * 20) + '%"></i></div><b>' + virgule(flan.criteres[i], 1) + '</b></div>';
@@ -303,7 +303,7 @@ function nombre(texte, min, max) {   // « 4,5 » devient 4.5 ; null si ce n'est
 function ligneEnFlan(entetes, cellules) {
   function col(nom) { return (cellules[entetes.indexOf(nom)] || "").trim(); }
   if (!col("nom") || !col("ville")) return null;
-  const criteres = [col("croute"), col("creme"), col("caramelisation"), col("qualite")].map(function(t) { return nombre(t, 0, 5); });
+  const criteres = [col("pate"), col("creme"), col("gout"), col("qualite")].map(function(t) { return nombre(t, 0, 5); });
   return {
     nom: col("nom"), ville: col("ville"), adresse: col("adresse"), saveur: col("saveur"),
     prix: nombre(col("prix"), 0, 100) ?? undefined,

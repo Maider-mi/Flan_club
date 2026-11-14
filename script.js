@@ -73,14 +73,23 @@ if (emplacementCarte && typeof L !== "undefined") {
     maxZoom: 19
   }).addTo(carte);
 
+
+const iconeFlan = L.divIcon({
+  html: '<div style="font-size:32px; text-align:center; line-height:40px;">🍮</div>',
+  className: "",
+  iconSize: [40, 40],
+  iconAnchor: [20, 20]
+});
+
 flans.forEach(function(flan) {
   if (typeof flan.latitude === "number" &&
       typeof flan.longitude === "number") {
-    L.marker([flan.latitude, flan.longitude])
+    L.marker([flan.latitude, flan.longitude], {icon: iconeFlan})
       .addTo(carte)
       .bindPopup("🍮 " + flan.nom + " - " + flan.ville);
   }
 });
+  
   const boutonGeo = document.getElementById("btn-geolocalisation");
 
   if (boutonGeo) {

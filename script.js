@@ -59,3 +59,16 @@ function afficher() {
 // 6. LE DÉMARRAGE : à chaque lettre tapée on réaffiche, et on affiche une première fois au chargement
 champRecherche.addEventListener("input", afficher);
 afficher();
+
+  
+// 7. LA CARTE INTERACTIVE DES FLANS
+const emplacementCarte = document.getElementById("carte-flans");
+
+if (emplacementCarte && typeof L !== "undefined") {
+  const carte = L.map("carte-flans").setView([43.4933, -1.4751], 10);
+
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 19
+  }).addTo(carte);
+}

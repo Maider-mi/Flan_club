@@ -1,0 +1,121 @@
+/* LES COULEURS : on les range ici pour pouvoir les changer facilement */
+:root {
+  --creme: #FFF6E5;
+  --blanc-creme: #FFFDF8;
+  --caramel: #C2761F;
+  --chocolat: #3E2418;
+  --gris-brun: #7A5A48;
+  --trait: #EBD8B6;
+  --ombre: rgba(62, 36, 24, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--creme);
+  color: var(--chocolat);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+/* L'EN-TÊTE */
+header {
+  text-align: center;
+  padding: 56px 20px 36px;
+  background: radial-gradient(circle at 50% 0, rgba(194, 118, 31, 0.18), transparent 65%);
+}
+
+.badge {
+  display: inline-block;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  border: 1px solid var(--caramel);
+  border-radius: 99px;
+  padding: 4px 14px;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  margin: 16px 0 8px;
+  line-height: 1;
+}
+h1 span { color: var(--caramel); }
+
+.tagline {
+  color: var(--gris-brun);
+  font-size: 1.1rem;
+  max-width: 480px;
+  margin: 0 auto 28px;
+}
+
+/* LA BARRE DE RECHERCHE */
+.recherche {
+  max-width: 460px;
+  margin: 0 auto;
+  background: var(--blanc-creme);
+  border: 2px solid var(--trait);
+  border-radius: 99px;
+  padding: 6px 20px;
+  box-shadow: 0 8px 24px var(--ombre);
+}
+.recherche:focus-within { border-color: var(--caramel); }
+.recherche input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--chocolat);
+  font: inherit;
+  font-size: 1rem;
+  padding: 8px 0;
+}
+
+/* LA LISTE DES FICHES : une grille qui s'adapte à la taille de l'écran */
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px 56px;
+}
+#compteur { color: var(--gris-brun); font-weight: 500; margin: 0 0 18px; }
+#liste {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 22px;
+}
+
+/* UNE FICHE */
+.fiche {
+  background: var(--blanc-creme);
+  border: 1px solid var(--trait);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px var(--ombre);
+  transition: transform 0.2s;
+}
+.fiche:hover { transform: translateY(-5px); }
+.fiche img { display: block; width: 100%; height: auto; }
+.infos { padding: 16px 20px 20px; }
+.haut { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.nom { font-family: Georgia, "Times New Roman", serif; font-size: 1.3rem; margin: 0; }
+.prix { font-weight: 600; color: var(--caramel); white-space: nowrap; }
+.ville { margin: 2px 0 10px; color: var(--gris-brun); font-size: 0.95rem; }
+.saveur {
+  display: inline-block;
+  font-size: 0.8rem;
+  background: var(--creme);
+  border: 1px solid var(--trait);
+  border-radius: 99px;
+  padding: 2px 10px;
+  margin-bottom: 10px;
+}
+.note { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.etoiles { color: var(--caramel); letter-spacing: 2px; }
+
+#vide { text-align: center; color: var(--gris-brun); padding: 48px 0; font-size: 1.1rem; }
+footer { text-align: center; color: var(--gris-brun); font-size: 0.85rem; padding: 0 20px 40px; }

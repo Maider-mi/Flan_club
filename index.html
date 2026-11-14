@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flan Club</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- L'en-tête : le titre et la barre de recherche -->
+  <header>
+    <p class="badge">Le guide des gourmands</p>
+    <h1>Flan <span>Club</span></h1>
+    <p class="tagline">Les meilleurs flans du Pays Basque, bientôt de toute la France.</p>
+    <div class="recherche">
+      <input id="recherche" type="search" placeholder="Cherchez une ville : Bayonne, Biarritz, Hendaye…" aria-label="Rechercher par ville" autocomplete="off">
+    </div>
+  </header>
+
+  <!-- Le contenu : les fiches de flans sont ajoutées ici par script.js -->
+  <main>
+    <p id="compteur"></p>
+    <div id="liste"></div>
+    <p id="vide" hidden>Aucun flan dans cette ville… pour l’instant.</p>
+  </main>
+
+  <footer>Prototype — les pâtisseries, prix et notes sont fictifs.</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

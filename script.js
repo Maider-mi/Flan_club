@@ -73,4 +73,34 @@ if (emplacementCarte && typeof L !== "undefined") {
   }).addTo(carte);
 
   L.marker([43.4929, -1.4748]).addTo(carte).bindPopup("🍮 Premier flan à Bayonne !");
+
+  const boutonGeo = document.getElementById("btn-geolocalisation");
+
+  if (boutonGeo) {
+    boutonGeo.addEventListener("click", function () {
+      if (!navigator.geolocation) {
+        alert("La géolocalisation n'est pas disponible sur ce navigateur.");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          carte.setView([latitude, longitude], 14);
+
+          L.marker([latitude, longitude])
+            .addTo(carte)
+            .bindPopup("📍 Vous êtes ici !")
+            .openPopup();
+        },
+        function (erreur) {
+          alert("Impossible de te géolocaliser. Vérifie les autorisations de ton navigateur.");
+          console.error(erreur);
+        }
+      );
+    });
+  }
+  
 }

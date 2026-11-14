@@ -114,17 +114,7 @@ L.marker([flan.latitude, flan.longitude], { icon: iconeFlan })
   .addTo(carte)
   .bindPopup(fichePopup);
   
-        champRecherche.value = "";
-        afficher();
 
-        const numero = flans.indexOf(flan);
-        const fiche = liste.children[numero];
-
-        if (fiche) {
-          fiche.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
         }
       });
   }

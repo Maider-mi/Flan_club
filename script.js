@@ -71,4 +71,6 @@ if (emplacementCarte && typeof L !== "undefined") {
     attribution: '&copy; OpenStreetMap contributors',
     maxZoom: 19
   }).addTo(carte);
+
+  L.marker([43.4929, -1.4748]).addTo(carte).bindPopup("🍮 Premier flan à Bayonne !");
 }

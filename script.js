@@ -86,9 +86,34 @@ flans.forEach(function(flan) {
   if (typeof flan.latitude === "number" &&
       typeof flan.longitude === "number") {
 
-    L.marker([flan.latitude, flan.longitude], { icon: iconeFlan })
-      .addTo(carte)
-      .on("click", function () {
+   
+const photo = flan.photo
+  ? '<img src="' + flan.photo + '" alt="Photo du flan" style="width:100%;height:120px;object-fit:cover;border-radius:10px;">'
+  : "";
+
+const prix = typeof flan.prix === "number"
+  ? flan.prix.toFixed(2) + " €"
+  : "Non renseigné";
+
+const note = typeof flan.note === "number"
+  ? flan.note + " / 5 ⭐"
+  : "Non renseignée";
+
+const fichePopup = `
+  <div style="width:220px;font-family:Arial,sans-serif;">
+    ${photo}
+    <h3 style="margin:10px 0 5px;">🍮 ${flan.nom}</h3>
+    <p>📍 ${flan.ville}</p>
+    <p>🍮 ${flan.saveur || "À découvrir"}</p>
+    <p>💶 ${prix}</p>
+    <p>⭐ ${note}</p>
+  </div>
+`;
+
+L.marker([flan.latitude, flan.longitude], { icon: iconeFlan })
+  .addTo(carte)
+  .bindPopup(fichePopup);
+  
         champRecherche.value = "";
         afficher();
 

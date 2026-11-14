@@ -2,17 +2,27 @@
 // Tant que ce lien est vide, le site affiche seulement les flans écrits dans la liste ci-dessous.
 const LIEN_FEUILLE = "";
 
+// Les commentaires : le lien CSV de l'onglet « Commentaires », et le lien du formulaire « Laisser un commentaire ».
+// Tant qu'ils sont vides, seuls les commentaires écrits dans la liste ci-dessous s'affichent.
+const LIEN_COMMENTAIRES = "";
+const LIEN_FORM_COMMENTAIRE = "";
+
 // 1. LES DONNEES : les flans recensés
 // - "criteres" = les 4 notes [croûte, crème, caramélisation, qualité/prix]. La note finale est leur moyenne.
 // - "exemple: true" = flan inventé (une étiquette « Exemple fictif » s'affiche).
 // - latitude / longitude = la position exacte. Sans elles, le flan est placé au centre de sa ville.
 const flansLocaux = [
   { nom: "Veloff", ville: "Biarritz", saveur: "Vanille", prix: 4.20, note: 4.8, photo: "images/flan-1.svg", latitude: 43.46161420631582, longitude: -1.5396550134930929 },
-  { nom: "Le Flan Doré", ville: "Biarritz", saveur: "Nature intense", prix: 3.60, criteres: [4.5, 4.8, 4.4, 4.7], photo: "images/flan-2.svg", exemple: true },
-  { nom: "Atelier Ostal", ville: "Saint-Jean-de-Luz", saveur: "Chocolat noir", prix: 4.50, criteres: [4.8, 5.0, 4.9, 4.9], photo: "images/flan-3.svg", exemple: true },
-  { nom: "Belle Époque", ville: "Hendaye", saveur: "Noix de coco", prix: 3.90, criteres: [4.4, 4.6, 4.4, 4.6], photo: "images/flan-4.svg", exemple: true },
-  { nom: "Les Délices de Léonie", ville: "Espelette", saveur: "Pistache", prix: 4.80, criteres: [4.6, 4.8, 4.7, 4.7], photo: "images/flan-5.svg", exemple: true },
-  { nom: "Vanille & Cie", ville: "Saint-Jean-Pied-de-Port", saveur: "Caramel beurre salé", prix: 4.00, criteres: [4.3, 4.5, 4.6, 4.2], photo: "images/flan-6.svg", exemple: true }
+  { nom: "Le Flan Doré", ville: "Biarritz", saveur: "Nature intense", prix: 3.60, criteres: [4.5, 4.8, 4.4, 4.7], photo: "images/flan-2.svg", exemple: true,
+    commentaires: [{ auteur: "Camille", texte: "Une pâte bien croustillante, je recommande le dimanche matin." }, { auteur: "Mikel", texte: "Un peu de queue le week-end, mais ça vaut l’attente." }] },
+  { nom: "Atelier Ostal", ville: "Saint-Jean-de-Luz", saveur: "Chocolat noir", prix: 4.50, criteres: [4.8, 5.0, 4.9, 4.9], photo: "images/flan-3.svg", exemple: true,
+    commentaires: [{ auteur: "Ane", texte: "Le chocolat est intense, pas trop sucré." }, { auteur: "Julien", texte: "Mon flan préféré de la côte." }] },
+  { nom: "Belle Époque", ville: "Hendaye", saveur: "Noix de coco", prix: 3.90, criteres: [4.4, 4.6, 4.4, 4.6], photo: "images/flan-4.svg", exemple: true,
+    commentaires: [{ auteur: "Sophie", texte: "La noix de coco est généreuse et la texture bien tenue." }] },
+  { nom: "Les Délices de Léonie", ville: "Espelette", saveur: "Pistache", prix: 4.80, criteres: [4.6, 4.8, 4.7, 4.7], photo: "images/flan-5.svg", exemple: true,
+    commentaires: [{ auteur: "Maïte", texte: "Une vraie pistache, ça change des flans classiques." }, { auteur: "Paul", texte: "Petit prix pour la qualité." }] },
+  { nom: "Vanille & Cie", ville: "Saint-Jean-Pied-de-Port", saveur: "Caramel beurre salé", prix: 4.00, criteres: [4.3, 4.5, 4.6, 4.2], photo: "images/flan-6.svg", exemple: true,
+    commentaires: [{ auteur: "Lucie", texte: "Le caramel au beurre salé fait toute la différence." }] }
 ];
 let flans = [];
 
@@ -178,6 +188,24 @@ function creerFiche(flan) {
     + '</div></article>';
 }
 
+// LES COMMENTAIRES d'un flan (affichés dans la fenêtre de détail)
+function blocCommentaires(flan) {
+  let commentaires = Array.isArray(flan.commentaires) ? flan.commentaires.slice() : [];
+  if (flan.avis) commentaires.unshift({ texte: flan.avis });   // l'avis laissé avec la proposition compte comme un commentaire
+  const titre = '<h3 class="titre-commentaires">💬 Commentaires (' + commentaires.length + ')</h3>';
+  const items = commentaires.length
+    ? commentaires.map(function(c) {
+        const signature = [c.auteur, c.date].filter(Boolean).map(proteger).join(" · ");
+        return '<div class="commentaire"><p>« ' + proteger(c.texte) + ' »</p>' + (signature ? '<small>— ' + signature + '</small>' : "") + '</div>';
+      }).join("")
+    : '<p class="astuce">Pas encore de commentaire. Sois le premier !</p>';
+  const mentionFictive = flan.exemple && commentaires.length ? '<p class="astuce"><small>Commentaires inventés.</small></p>' : "";
+  const bouton = LIEN_FORM_COMMENTAIRE
+    ? '<a class="btn btn-secondaire btn-petit" href="' + proteger(LIEN_FORM_COMMENTAIRE) + '" target="_blank" rel="noopener noreferrer">✍️ Laisser un commentaire</a>'
+    : "";
+  return '<div class="commentaires">' + titre + items + mentionFictive + bouton + '</div>';
+}
+
 // 6. LA FENÊTRE DE DÉTAIL
 function ouvrirDetail(id) {
   if (!fenetre) return;
@@ -204,7 +232,7 @@ function ouvrirDetail(id) {
     + '<p class="ville">📍 ' + proteger(flan.adresse ? flan.adresse + ", " : "") + proteger(flan.ville) + ' · ' + proteger(flan.saveur || "À découvrir") + ' · ' + formaterPrix(flan) + '</p>'
     + '<div class="grosse-note"><b>' + (note === null ? "–" : virgule(note, 1)) + '</b><span class="etoiles">' + (note === null ? "" : formaterEtoiles(note)) + '</span></div>'
     + barres
-    + (flan.avis ? '<p class="avis">« ' + proteger(flan.avis) + ' »</p>' : "")
+    + blocCommentaires(flan)
     + '<div class="actions" style="padding:16px 0 0;">' + (reperes[flan.id] ? '<button class="btn btn-principal btn-petit" onclick="voirSurCarte(' + flan.id + ')">📍 Sur la carte</button>' : "") + lienItineraire + '</div></div>';
   fenetre.showModal();
 }
@@ -227,10 +255,15 @@ function trier(resultats) {
   });
 }
 
+function correspond(flan, recherche) {   // la recherche porte sur le nom du flan, la ville et la saveur
+  const texte = simplifier(flan.nom + " " + flan.ville + " " + (flan.saveur || ""));
+  return recherche.split(/\s+/).filter(Boolean).every(function(mot) { return texte.includes(mot); });
+}
+
 function afficher() {
   if (!champRecherche || !liste || !compteur || !messageVide) return;
   const recherche = simplifier(champRecherche.value);
-  const resultats = flans.filter(function(flan) { return simplifier(flan.ville).includes(recherche); });
+  const resultats = flans.filter(function(flan) { return correspond(flan, recherche); });
   trier(resultats);
   dessinerReperes(resultats);   // d'abord la carte, pour que les fiches sachent si elles ont un repère
   liste.innerHTML = resultats.map(creerFiche).join("");
@@ -286,23 +319,44 @@ function numeroter(liste) {   // chaque flan reçoit un numéro unique
   return liste;
 }
 
+async function lireFeuille(lien) {   // télécharge une feuille Google publiée en CSV
+  const reponse = await fetch(lien);
+  if (!reponse.ok) throw new Error("Erreur " + reponse.status);
+  const lignes = lireCSV(await reponse.text());
+  const entetes = lignes.shift().map(simplifier);
+  return { entetes: entetes, lignes: lignes };
+}
+
 async function chargerFeuille() {
   flans = numeroter(flansLocaux.slice());
-  afficher();
-  if (!LIEN_FEUILLE) return;
-  try {
-    const reponse = await fetch(LIEN_FEUILLE);
-    if (!reponse.ok) throw new Error("Erreur " + reponse.status);
-    const lignes = lireCSV(await reponse.text());
-    const entetes = lignes.shift().map(simplifier);
-    const deja = flansLocaux.map(function(f) { return simplifier(f.nom + f.ville); });
-    const nouveaux = lignes.map(function(l) { return ligneEnFlan(entetes, l); })
-      .filter(function(f) { return f && !deja.includes(simplifier(f.nom + f.ville)); });
-    flans = numeroter(flansLocaux.concat(nouveaux));
-    afficher();
-  } catch (erreur) {
-    console.error("Impossible de lire la feuille Google :", erreur);   // le site continue avec les flans locaux
+  afficher();   // on affiche tout de suite les flans de la liste, puis on ajoute ceux de la feuille
+  let nouveaux = [];
+  if (LIEN_FEUILLE) {
+    try {
+      const feuille = await lireFeuille(LIEN_FEUILLE);
+      const deja = flansLocaux.map(function(f) { return simplifier(f.nom + f.ville); });
+      nouveaux = feuille.lignes.map(function(l) { return ligneEnFlan(feuille.entetes, l); })
+        .filter(function(f) { return f && !deja.includes(simplifier(f.nom + f.ville)); });
+    } catch (erreur) {
+      console.error("Impossible de lire la feuille des flans :", erreur);   // le site continue avec les flans locaux
+    }
   }
+  flans = numeroter(flansLocaux.concat(nouveaux));
+  if (LIEN_COMMENTAIRES) {
+    try {
+      const feuille = await lireFeuille(LIEN_COMMENTAIRES);
+      feuille.lignes.forEach(function(l) {
+        function col(nom) { return (l[feuille.entetes.indexOf(nom)] || "").trim(); }
+        const flan = flans.find(function(f) { return simplifier(f.nom) === simplifier(col("flan")); });
+        if (flan && col("commentaire")) {
+          flan.commentaires = (flan.commentaires || []).concat([{ auteur: col("auteur"), texte: col("commentaire"), date: col("date") }]);
+        }
+      });
+    } catch (erreur) {
+      console.error("Impossible de lire la feuille des commentaires :", erreur);
+    }
+  }
+  afficher();
 }
 
 // 9. LE DÉMARRAGE

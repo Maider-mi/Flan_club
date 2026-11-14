@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -30,7 +30,7 @@
     <h1>Flan <span>Club</span></h1>
     <p class="tagline">Les meilleurs flans du Pays Basque, bientôt de toute la France.</p>
     <div class="recherche"><span class="loupe" aria-hidden="true">🔍</span>
-      <input id="recherche" type="search" placeholder="Cherchez une ville : Bayonne, Biarritz, Hendaye…" aria-label="Rechercher par ville" autocomplete="off">
+      <input id="recherche" type="search" placeholder="Cherchez un flan ou une ville : Veloff, Bayonne, pistache…" aria-label="Rechercher un flan ou une ville" autocomplete="off">
     </div>
   </header>
 
@@ -47,7 +47,7 @@
       </label>
     </div>
     <div id="liste"></div>
-    <p id="vide" hidden>Aucun flan dans cette ville… pour l’instant.</p>
+    <p id="vide" hidden>Aucun flan trouvé pour cette recherche… pour l’instant.</p>
   </main>
 
   <!-- LA CARTE -->
@@ -76,6 +76,6 @@
   <!-- La fenêtre qui s'ouvre quand on clique sur « Voir le détail » -->
   <dialog id="detail"></dialog>
 
-  <script src="script.js?v=10"></script>
+  <script src="script.js?v=11"></script>
 </body>
 </html>

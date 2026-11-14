@@ -103,6 +103,9 @@ if (emplacementCarte && typeof L !== "undefined") {
     attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
   }).addTo(carte);
   groupeReperes = L.layerGroup().addTo(carte);
+  // la carte recalcule sa taille une fois la page entièrement chargée (évite une carte vide ou grise)
+  window.addEventListener("load", function() { carte.invalidateSize(); });
+  setTimeout(function() { carte.invalidateSize(); }, 500);
 
   // Le bouton « Me géolocaliser »
   const boutonGeo = document.getElementById("btn-geolocalisation");
@@ -152,7 +155,7 @@ function dessinerReperes(resultats) {   // on remet un repère pour chaque flan 
 function voirSurCarte(id) {   // le bouton « Sur la carte » d'une fiche
   const repere = reperes[id];
   if (!repere || !carte) return;
-  if (fenetre.open) fenetre.close();
+  if (fenetre && fenetre.open) fenetre.close();
   document.getElementById("section-carte").scrollIntoView({ behavior: "smooth" });
   carte.setView(repere.getLatLng(), 15);
   repere.openPopup();
@@ -161,12 +164,13 @@ function voirSurCarte(id) {   // le bouton « Sur la carte » d'une fiche
 // 5. UNE FICHE
 function creerFiche(flan) {
   const note = calculerNote(flan);
-  const etiquettes = '<span class="saveur">' + proteger(flan.saveur || "À découvrir") + '</span>'
-    + (flan.exemple ? '<span class="exemple">Exemple fictif</span>' : "");
   return '<article class="fiche">'
-    + '<img src="' + proteger(photoDe(flan)) + '" alt="Illustration du flan">'
+    + '<div class="photo"><img src="' + proteger(photoDe(flan)) + '" alt="Illustration du flan">'
+    + (note === null ? "" : '<span class="pastille">★ ' + virgule(note, 1) + '</span>')
+    + (flan.exemple ? '<span class="exemple">Exemple fictif</span>' : "") + '</div>'
     + '<div class="infos"><div class="haut"><h2 class="nom">' + proteger(flan.nom) + '</h2><span class="prix">' + formaterPrix(flan) + '</span></div>'
-    + '<p class="ville">📍 ' + proteger(flan.ville) + '</p>' + etiquettes
+    + '<p class="ville">📍 ' + proteger(flan.ville) + '</p>'
+    + '<span class="saveur">' + proteger(flan.saveur || "À découvrir") + '</span>'
     + '<div class="note"><span class="etoiles">' + (note === null ? "" : formaterEtoiles(note)) + '</span><span>'
     + (note === null ? "Pas encore de note" : virgule(note, 1) + " / 5") + '</span></div></div>'
     + '<div class="actions"><button class="btn btn-principal btn-petit" data-action="detail" data-id="' + flan.id + '">Voir le détail</button>'
@@ -176,6 +180,7 @@ function creerFiche(flan) {
 
 // 6. LA FENÊTRE DE DÉTAIL
 function ouvrirDetail(id) {
+  if (!fenetre) return;
   const flan = flans.find(function(f) { return f.id === id; });
   if (!flan) return;
   const note = calculerNote(flan);
@@ -203,7 +208,7 @@ function ouvrirDetail(id) {
     + '<div class="actions" style="padding:16px 0 0;">' + (reperes[flan.id] ? '<button class="btn btn-principal btn-petit" onclick="voirSurCarte(' + flan.id + ')">📍 Sur la carte</button>' : "") + lienItineraire + '</div></div>';
   fenetre.showModal();
 }
-fenetre.addEventListener("click", function(e) { if (e.target === fenetre) fenetre.close(); });
+if (fenetre) fenetre.addEventListener("click", function(e) { if (e.target === fenetre) fenetre.close(); });
 liste.addEventListener("click", function(e) {   // un clic sur un bouton d'une fiche
   const bouton = e.target.closest("button[data-action]");
   if (!bouton) return;

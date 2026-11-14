@@ -4,7 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flan Club</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=10">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -26,7 +29,7 @@
     <p class="badge">Le guide des gourmands</p>
     <h1>Flan <span>Club</span></h1>
     <p class="tagline">Les meilleurs flans du Pays Basque, bientôt de toute la France.</p>
-    <div class="recherche">
+    <div class="recherche"><span class="loupe" aria-hidden="true">🔍</span>
       <input id="recherche" type="search" placeholder="Cherchez une ville : Bayonne, Biarritz, Hendaye…" aria-label="Rechercher par ville" autocomplete="off">
     </div>
   </header>
@@ -52,7 +55,7 @@
     <h2>🗺️ La carte des flans</h2>
     <p>Découvre les meilleurs flans près de chez toi !</p>
     <button id="btn-geolocalisation" class="btn btn-secondaire" type="button">📍 Me géolocaliser</button>
-    <div id="carte-flans"></div>
+    <div id="carte-flans" style="height:450px;"></div>
   </section>
 
   <!-- COMMENT ON NOTE -->
@@ -73,6 +76,6 @@
   <!-- La fenêtre qui s'ouvre quand on clique sur « Voir le détail » -->
   <dialog id="detail"></dialog>
 
-  <script src="script.js?v=9"></script>
+  <script src="script.js?v=10"></script>
 </body>
 </html>

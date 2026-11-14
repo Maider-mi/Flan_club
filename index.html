@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr">
-  
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flan Club</title>
   <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
-  
 <body>
-<a href="https://docs.google.com/forms/d/e/1FAIpQLScXgtDvw31OvlD2ly0UMrAUGnpXPc7MJMw3K40vHbKZVQmLmg/viewform"
-   target="_blank"
-   rel="noopener noreferrer"
-   style="display:block; width:fit-content; margin:30px auto; padding:15px 25px; background:#b86b35; color:white; border-radius:30px; text-decoration:none; font-weight:bold;">
-  🍮 Proposer un flan
-</a>
 
-  <!-- L'en-tête : le titre et la barre de recherche -->
-  <header>
+  <!-- LA BARRE DU HAUT : le logo, les liens et le bouton « Proposer un flan » -->
+  <nav class="barre">
+    <a class="logo" href="#accueil">Flan <span>Club</span></a>
+    <div class="liens">
+      <a href="#les-flans">Les flans</a>
+      <a href="#section-carte">La carte</a>
+      <a href="#notation">Comment on note</a>
+      <a class="btn btn-principal" href="https://docs.google.com/forms/d/e/1FAIpQLScXgtDvw31OvlD2ly0UMrAUGnpXPc7MJMw3K40vHbKZVQmLmg/viewform" target="_blank" rel="noopener noreferrer">🍮 Proposer un flan</a>
+    </div>
+  </nav>
+
+  <!-- L'EN-TÊTE : le titre et la barre de recherche -->
+  <header id="accueil">
     <p class="badge">Le guide des gourmands</p>
     <h1>Flan <span>Club</span></h1>
     <p class="tagline">Les meilleurs flans du Pays Basque, bientôt de toute la France.</p>
@@ -30,22 +31,48 @@
     </div>
   </header>
 
-  <!-- Le contenu : les fiches de flans sont ajoutées ici par script.js -->
-  <main>
-    <p id="compteur"></p>
+  <!-- LES FLANS : les fiches sont ajoutées ici par script.js -->
+  <main id="les-flans">
+    <div class="outils">
+      <p id="compteur"></p>
+      <label class="tri">Trier par
+        <select id="tri">
+          <option value="note">Mieux notés</option>
+          <option value="prix-asc">Prix croissant</option>
+          <option value="prix-desc">Prix décroissant</option>
+        </select>
+      </label>
+    </div>
     <div id="liste"></div>
     <p id="vide" hidden>Aucun flan dans cette ville… pour l’instant.</p>
   </main>
 
-  <footer>Prototype — les pâtisseries, prix et notes sont fictifs.</footer>
+  <!-- LA CARTE -->
+  <section id="section-carte" class="bloc">
+    <h2>🗺️ La carte des flans</h2>
+    <p>Découvre les meilleurs flans près de chez toi !</p>
+    <button id="btn-geolocalisation" class="btn btn-secondaire" type="button">📍 Me géolocaliser</button>
+    <div id="carte-flans"></div>
+  </section>
 
-<section id="section-carte" style="max-width:1100px; margin:40px auto; padding:20px;">
-  <h2>🗺️ La carte des flans</h2>
-  <p>Découvre les meilleurs flans près de chez toi !</p>
- <button id="btn-geolocalisation" type="button">📍 Me géolocaliser</button>
-  <div id="carte-flans" style="height:450px; width:100%; border-radius:15px;"></div>
-</section>
+  <!-- COMMENT ON NOTE -->
+  <section id="notation" class="bloc">
+    <h2>⭐ Comment on note un flan ?</h2>
+    <p>Chaque flan reçoit quatre notes, de 0 à 5. Sa note finale est la moyenne des quatre.</p>
+    <div class="criteres-liste">
+      <div class="critere-carte"><b>🥧 Croûte</b><span>La pâte : fine, croustillante, bien cuite.</span></div>
+      <div class="critere-carte"><b>🍮 Crème</b><span>La texture et le goût : onctueuse, ni trop ferme ni trop liquide.</span></div>
+      <div class="critere-carte"><b>🔥 Caramélisation</b><span>Le dessus : doré et légèrement caramélisé, sans être brûlé.</span></div>
+      <div class="critere-carte"><b>💶 Rapport qualité/prix</b><span>Ce qu’on reçoit pour son argent.</span></div>
+    </div>
+    <p class="astuce">Tu connais un bon flan ? Utilise le bouton « Proposer un flan » : chaque proposition est relue avant d’être publiée.</p>
+  </section>
 
-  <script src="script.js?v=8"></script>
+  <footer>Les flans marqués « Exemple fictif » sont inventés.</footer>
+
+  <!-- La fenêtre qui s'ouvre quand on clique sur « Voir le détail » -->
+  <dialog id="detail"></dialog>
+
+  <script src="script.js?v=9"></script>
 </body>
 </html>

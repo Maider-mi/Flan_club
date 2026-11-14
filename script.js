@@ -1,7 +1,8 @@
 // 1. LES DONNÉES : la liste des 6 flans.
 // Pour ajouter un flan, il suffit de copier une ligne et de changer les infos.
 const flans = [
-  { nom: "Maison Caramélia",       ville: "Bayonne",                 saveur: "Vanille bourbon",     prix: 4.20, note: 4.8, photo: "images/flan-1.svg" },
+  { nom: "Veloff",       ville: "Biarritz",                 saveur: "Vanille",     prix: 4.20, note: 4.8, photo: "images/flan-1.svg", latitude: 43.46161420631582,
+  longitude: -1.5396550134930929 },
   { nom: "Le Flan Doré",           ville: "Biarritz",                saveur: "Nature intense",      prix: 3.60, note: 4.6, photo: "images/flan-2.svg" },
   { nom: "Atelier Ostal",          ville: "Saint-Jean-de-Luz",       saveur: "Chocolat noir",       prix: 4.50, note: 4.9, photo: "images/flan-3.svg" },
   { nom: "Belle Époque",           ville: "Hendaye",                 saveur: "Noix de coco",        prix: 3.90, note: 4.5, photo: "images/flan-4.svg" },

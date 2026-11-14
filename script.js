@@ -81,26 +81,30 @@ const iconeFlan = L.divIcon({
   iconAnchor: [20, 20]
 });
 
+
 flans.forEach(function(flan) {
   if (typeof flan.latitude === "number" &&
       typeof flan.longitude === "number") {
-   
-L.marker([flan.latitude, flan.longitude], {icon: iconeFlan})
-  .addTo(carte)
-  .on("click", function () {
-    champRecherche.value = "";
-    afficher();
 
-    const numero = flans.indexOf(flan);
-    const fiche = liste.children[numero];
+    L.marker([flan.latitude, flan.longitude], { icon: iconeFlan })
+      .addTo(carte)
+      .on("click", function () {
+        champRecherche.value = "";
+        afficher();
 
-    if (fiche) {
-      fiche.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
+        const numero = flans.indexOf(flan);
+        const fiche = liste.children[numero];
+
+        if (fiche) {
+          fiche.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        }
       });
-    }
-  });
+  }
+});
+  
   
   const boutonGeo = document.getElementById("btn-geolocalisation");
 

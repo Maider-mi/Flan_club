@@ -84,11 +84,23 @@ const iconeFlan = L.divIcon({
 flans.forEach(function(flan) {
   if (typeof flan.latitude === "number" &&
       typeof flan.longitude === "number") {
-    L.marker([flan.latitude, flan.longitude], {icon: iconeFlan})
-      .addTo(carte)
-      .bindPopup("🍮 " + flan.nom + " - " + flan.ville);
-  }
-});
+   
+L.marker([flan.latitude, flan.longitude], {icon: iconeFlan})
+  .addTo(carte)
+  .on("click", function () {
+    champRecherche.value = "";
+    afficher();
+
+    const numero = flans.indexOf(flan);
+    const fiche = liste.children[numero];
+
+    if (fiche) {
+      fiche.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  });
   
   const boutonGeo = document.getElementById("btn-geolocalisation");
 
